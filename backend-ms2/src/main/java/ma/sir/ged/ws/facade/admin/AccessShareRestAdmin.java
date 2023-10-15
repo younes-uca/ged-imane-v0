@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+import lombok.extern.slf4j.Slf4j;
 import ma.sir.ged.bean.core.AccessShare;
 import ma.sir.ged.bean.history.AccessShareHistory;
 import ma.sir.ged.dao.criteria.core.AccessShareCriteria;
@@ -28,6 +29,7 @@ import ma.sir.ged.zynerator.process.Result;
 import org.springframework.web.multipart.MultipartFile;
 import ma.sir.ged.zynerator.dto.FileTempDto;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/admin/accessShare/")
 public class AccessShareRestAdmin  extends AbstractController<AccessShare, AccessShareDto, AccessShareHistory, AccessShareCriteria, AccessShareHistoryCriteria, AccessShareAdminService, AccessShareConverter> {
@@ -48,6 +50,7 @@ public class AccessShareRestAdmin  extends AbstractController<AccessShare, Acces
     @Operation(summary = "Finds a list of all accessShares")
     @GetMapping("")
     public ResponseEntity<List<AccessShareDto>> findAll() throws Exception {
+        log.info("findAll AccessShare");
         return super.findAll();
     }
 

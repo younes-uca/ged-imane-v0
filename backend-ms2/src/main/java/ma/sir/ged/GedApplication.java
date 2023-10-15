@@ -8,6 +8,7 @@ import ma.sir.ged.zynerator.security.bean.User;
 import ma.sir.ged.zynerator.security.common.AuthoritiesConstants;
 import ma.sir.ged.zynerator.security.service.facade.RoleService;
 import ma.sir.ged.zynerator.security.service.facade.UserService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,14 +22,16 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 @SpringBootApplication
 @EnableCaching
 //@EnableFeignClients("ma.sir.ged.required.facade")
 public class GedApplication {
     public static ConfigurableApplicationContext ctx;
-
     public static void main(String[] args) {
+
         ctx = SpringApplication.run(GedApplication.class, args);
     }
 

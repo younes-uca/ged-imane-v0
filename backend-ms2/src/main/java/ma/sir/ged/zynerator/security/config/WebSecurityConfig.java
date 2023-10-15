@@ -1,7 +1,9 @@
 package ma.sir.ged.zynerator.security.config;
 
-import javax.annotation.Resource;
-
+import ma.sir.ged.zynerator.security.common.AuthoritiesConstants;
+import ma.sir.ged.zynerator.security.jwt.JWTAuthenticationFilter;
+import ma.sir.ged.zynerator.security.jwt.JWTAuthorizationFiler;
+import ma.sir.ged.zynerator.security.service.facade.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,22 +13,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import ma.sir.ged.zynerator.security.jwt.JWTAuthenticationFilter;
-import ma.sir.ged.zynerator.security.jwt.JWTAuthorizationFiler;
-import  ma.sir.ged.zynerator.security.common.AuthoritiesConstants;
-import  ma.sir.ged.zynerator.security.service.facade.UserService;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-prePostEnabled = true,
-securedEnabled = true,
-jsr250Enabled = true)
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -34,6 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
@@ -48,11 +45,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/actuator/health").permitAll();
         http.authorizeRequests().antMatchers("/actuator/info").permitAll();
         http.authorizeRequests().antMatchers("/api/open/translation/**").permitAll();
+        http.authorizeRequests().antMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll(); // Permit access to Swagger UI and API docs
 
-            http.authorizeRequests().antMatchers("/api/admin/login").permitAll();
-            http.authorizeRequests().antMatchers("/api/collaborateur/login").permitAll();
-         http.authorizeRequests().antMatchers("/api/admin/").hasAnyAuthority(AuthoritiesConstants.ADMIN);
-         http.authorizeRequests().antMatchers("/api/collaborateur/").hasAnyAuthority(AuthoritiesConstants.COLLABORATEUR);
+        http.authorizeRequests().antMatchers("/api/admin/login").permitAll();
+        http.authorizeRequests().antMatchers("/api/collaborateur/login").permitAll();
+        http.authorizeRequests().antMatchers("/api/admin/").hasAnyAuthority(AuthoritiesConstants.ADMIN);
+        http.authorizeRequests().antMatchers("/api/collaborateur/").hasAnyAuthority(AuthoritiesConstants.COLLABORATEUR);
 
         // http.authorizeRequests().anyRequest().authenticated();
 
@@ -68,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder encoder(){
+    public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 

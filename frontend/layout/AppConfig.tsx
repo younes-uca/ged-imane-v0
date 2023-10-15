@@ -2,7 +2,7 @@ import { LayoutContext } from 'layout/context/layoutcontext';
 import { useContext, useEffect } from 'react';
 import { AppConfigProps } from 'types/types';
 
-const GED_BACKEND_BASE_URL = "http://34.125.71.106:8036/";
+const GED_BACKEND_BASE_URL = "http://localhost:8039/";
 export const AUTH_URL = GED_BACKEND_BASE_URL + 'login';
 export const CHANGE_PASSWORD_URL = GED_BACKEND_BASE_URL + 'api/admin/users/changePassword';
 export const ROLES_URL = GED_BACKEND_BASE_URL + "api/roles/";

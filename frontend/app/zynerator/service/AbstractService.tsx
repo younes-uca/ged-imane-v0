@@ -69,7 +69,7 @@ class AbstractService<T extends BaseDto, C extends BaseCriteria> {
         let utilisateur = new UtilisateurDto();
         utilisateur.password = password;
         utilisateur.username = username;
-        return axios.put('http://localhost:8036/api/admin/utilisateur/changePassword', utilisateur);
+        return axios.put('http://localhost:8039/api/admin/utilisateur/changePassword', utilisateur);
     }
 
 }
